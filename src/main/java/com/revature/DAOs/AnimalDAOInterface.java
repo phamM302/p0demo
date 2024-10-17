@@ -9,4 +9,12 @@ public interface AnimalDAOInterface {
     Animal insertAnimal(Animal ani);
 
     ArrayList<Animal> getAllAnimals();
+
+    ArrayList<Animal> getAnimalsByHabitatId(int id);
+
+    String updateAnimalSpecies(int id, String updatedSpecies);
+
+    int deleteAnimalById(int id);
+
+    int deleteAllAnimals();
 }

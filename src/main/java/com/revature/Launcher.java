@@ -19,7 +19,24 @@ public class Launcher {
         //insert animal
         app.post("/animals", ac.insertAnimalHandler);
 
+        //get animals by Habitat Id
+        app.get("/animals/{id}", ac.getAnimalsByIdHandler);
+
+        //update species name by id
+        app.patch("/animals/{id}", ac.updateAnimalSpeciesHandler);
+
+        //delete animal by id
+        app.delete("/animals/{id}", ac.deleteAnimalHandler);
+
+        //delete all animals
+        app.delete("/animals/", ac.deleteAllAnimalsHandler);
+
         //get habitat by ID
         app.get("/habitats/{id}", hc.getHabitatByIdHandler);
+
+        //update habitat capacity
+        app.patch("/habitats/{id}", hc.updateHabitatCapacityHandler);
+
+        app.post("/habitats", hc.insertHabitatHandler);
     }
 }

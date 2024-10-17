@@ -20,12 +20,12 @@ public class Animal {
         this.habitat_id_fk = habitat_id_fk;
     }
 
-    public Animal(int animal_age, int animal_id, String animal_species, String animal_name, Habitat habitat) {
-        this.animal_age = animal_age;
+    public Animal(int animal_id, String animal_name, String animal_species, int animal_age, int habitat_id_fk) {
         this.animal_id = animal_id;
-        this.animal_species = animal_species;
         this.animal_name = animal_name;
-        this.habitat = habitat;
+        this.animal_species = animal_species;
+        this.animal_age = animal_age;
+        this.habitat_id_fk = habitat_id_fk;
     }
 
     public int getAnimal_id() {

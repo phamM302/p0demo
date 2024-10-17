@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.DAOs.HabitatDAO;
+import com.revature.models.Animal;
 import com.revature.models.Habitat;
 import io.javalin.http.Handler;
 
@@ -25,7 +26,7 @@ public class HabitatController {
         }
     };
 
-    public Handler updateHabitatCapacity = ctx -> {
+    public Handler updateHabitatCapacityHandler = ctx -> {
         int habitat_id = Integer.parseInt(ctx.pathParam("id"));
         int capacity = Integer.parseInt((ctx.body()));
 
@@ -38,4 +39,23 @@ public class HabitatController {
             ctx.status(200);
         }
     };
+
+    /*
+    public Handler insertHabitatHandler
+    * */
+    public Handler insertHabitatHandler = ctx -> {
+        Habitat newHabitat = ctx.bodyAsClass(Habitat.class);
+        if(newHabitat.getHabitat_name() == null || newHabitat.getHabitat_name().trim().isEmpty()) {
+            ctx.result("Habitat name is required!");
+            ctx.status(400);
+        } else if (newHabitat.getHabitat_capacity() <= 0) {
+            ctx.result("Habitat needs to have 1 capacity");
+            ctx.status(400);
+        } else {
+            Habitat insertedHabitat = hDAO.insertHabitat(newHabitat);
+            ctx.status(201);
+            ctx.json(insertedHabitat);
+        }
+    };
+
 }

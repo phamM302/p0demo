@@ -50,6 +50,28 @@ public class HabitatDAO implements HabitatDAOInterface{
         }
         return null;
     }
+    @Override
+    public Habitat insertHabitat(Habitat hab) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            //create sql statement
+            String sql = "INSERT INTO habitats (habitat_name, habitat_capacity)" +
+                    "VALUES (?, ?)";
+            //use prepared statement to fill in value of variable
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            //use set method to fill value
+            ps.setString(1, hab.getHabitat_name());
+            ps.setInt(2,hab.getHabitat_capacity());
+            //send command to the DB
+            ps.executeUpdate();
+            //return the new employee object
+            return hab;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Couldn't insert Habitat");
+        }
+        return null;
+    }
 
     @Override
     public int updateHabitatCapacity(int id, int newCapacity) {
