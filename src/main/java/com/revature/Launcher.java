@@ -15,6 +15,12 @@ public class Launcher {
             }
         });
 
+        app.before("/habitats", ctx -> {
+            if(AuthController.ses == null) {
+                throw new IllegalArgumentException("You must login before doing this!");
+            }
+        });
+
         app.get("/", ctx -> ctx.result("hello javalin and postman"));
 
         app.exception(IllegalArgumentException.class, (e, ctx) -> {
