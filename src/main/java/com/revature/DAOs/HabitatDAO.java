@@ -1,12 +1,11 @@
 package com.revature.DAOs;
 
+import com.revature.models.Animal;
 import com.revature.models.Habitat;
 import com.revature.utils.ConnectionUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class HabitatDAO implements HabitatDAOInterface{
     @Override
@@ -90,5 +89,35 @@ public class HabitatDAO implements HabitatDAOInterface{
             System.out.println("Couldn't update the capacity");
         }
         return 0;
+    }
+
+    @Override
+    public ArrayList<Habitat> getAllHabitats() {
+        try(Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "SELECT * FROM habitats";
+            //statement object instead of prepared because there are no variables
+            Statement s = conn.createStatement();
+            //execute the query
+            ResultSet rs = s.executeQuery(sql);
+            //need an arraylist to store our employees to return
+            ArrayList<Habitat> habitats = new ArrayList<>();
+            while (rs.next()) {
+                Habitat h = new Habitat(
+                        rs.getInt("habitat_id"),
+                        rs.getString("habitat_name"),
+                        rs.getInt("habitat_capacity")
+                );
+
+                habitats.add(h);
+
+            }
+            return habitats;
+
+        } catch (SQLException e) {
+            e.printStackTrace();;
+            System.out.println("Couldn't get all Habitats");
+        }
+        //catch-all return
+        return null;
     }
 }

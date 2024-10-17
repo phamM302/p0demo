@@ -5,9 +5,17 @@ import com.revature.models.Animal;
 import com.revature.models.Habitat;
 import io.javalin.http.Handler;
 
+import java.util.ArrayList;
+
 public class HabitatController {
 
     HabitatDAO hDAO = new HabitatDAO();
+
+    public Handler getAllHabitatsHandler = ctx -> {
+        ArrayList<Habitat> habitats = hDAO.getAllHabitats();
+        ctx.json(habitats);
+        ctx.status(200);
+    };
 
     public Handler getHabitatByIdHandler = ctx -> {
         int habitat_id = Integer.parseInt(ctx.pathParam("id"));
